@@ -1,4 +1,4 @@
-import { useRecipes } from "./hook/useRecipes";
+import { useRecipes } from "./hooks/useRecipes";
 import Header from "./components/Header";
 import Filters from "./components/Filters";
 import Tags from "./components/Tags";

@@ -40,12 +40,10 @@ export const RecipesProvider = ({ children }) => {
     updateFiltersValues();
   }, [filteredRecipes]);
 
-  // Met à jour les recettes filtrées en fonction de la barre de recherche et des tags
   useEffect(() => {
     const updateFilteredRecipes = () => {
       let updatedRecipes = recipesData;
 
-      // Filtrer par barre de recherche
       if (searchTerm) {
         updatedRecipes = updatedRecipes.filter(
           (recipe) =>
@@ -61,7 +59,6 @@ export const RecipesProvider = ({ children }) => {
         );
       }
 
-      // Filtrer par tags
       tags.forEach(({ category, name }) => {
         if (category === "ingredients") {
           updatedRecipes = updatedRecipes.filter((recipe) =>

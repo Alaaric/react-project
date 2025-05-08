@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { useRecipes } from "../../hooks/useRecipes";
 import FilterButtonHeader from "./FilterButtonHeader";
 import FilterDropdown from "./FilterDropdown";
-import useFilterLogic from "../hooks/useFilterLogic";
+import useFilterLogic from "../../hooks/useFilterLogic";
 
-export default function FilterButton({ name, items, category, addTag, tags }) {
+export default function FilterButton({ name, items, category }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { tags, addTag } = useRecipes();
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
 

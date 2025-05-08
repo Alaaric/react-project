@@ -1,7 +1,10 @@
 import FilterButton from "./FilterButton";
-import { MATCH_TABLE } from "../constants/constants";
+import { MATCH_TABLE } from "../../constants/constants";
+import { useRecipes } from "../../hooks/useRecipes";
 
-const Filters = ({ filtersValues, tags, addTag, filteredRecipes }) => {
+const Filters = () => {
+  const { filteredRecipes, filtersValues } = useRecipes();
+
   return (
     <section className="filters">
       {Object.entries(filtersValues).map(([key, values]) => (
@@ -10,8 +13,6 @@ const Filters = ({ filtersValues, tags, addTag, filteredRecipes }) => {
           name={MATCH_TABLE[key]}
           items={values}
           category={key}
-          addTag={addTag}
-          tags={tags}
         />
       ))}
       <div className="recipe-count">

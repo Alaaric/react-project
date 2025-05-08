@@ -1,4 +1,8 @@
-const Tags = ({ tags, removeTag }) => {
+import { useRecipes } from "../../hooks/useRecipes";
+
+const Tags = () => {
+  const { tags, removeTag } = useRecipes();
+
   return (
     <section className="tags">
       {tags.map((tag) => (

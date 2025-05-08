@@ -1,6 +1,9 @@
-import "../css/App.css";
+import { useRecipes } from "../../hooks/useRecipes";
+import "../../css/App.css";
 
-const Header = ({ searchTerm, setSearchTerm }) => {
+const Header = () => {
+  const { searchTerm, setSearchTerm } = useRecipes();
+
   return (
     <header className="header">
       <div className="logo">

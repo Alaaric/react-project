@@ -168,6 +168,18 @@ body {
         font-size: 24px;
       }
     }
+    .ingredients {
+      background-color: #ffd15b;
+   
+    }
+
+    .ustensils {
+      background-color: #5bffce;
+    }
+
+    .appliances {
+      background-color: #7fff5b;
+    }
   
     .tags {
       margin: 50px auto auto auto;
@@ -183,18 +195,7 @@ body {
         align-items: center;
         justify-content: space-between;
 
-        &.ingredients {
-          background-color: #ffd15b;
-       
-        }
 
-        &.ustensils {
-          background-color: #5bffce;
-        }
-
-        &.appliances {
-          background-color: #7fff5b;
-        }
 
         .remove-tag {
           cursor: pointer;

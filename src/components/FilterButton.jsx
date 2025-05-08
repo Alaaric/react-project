@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FilterButton({ name, items, category, addTag }) {
+export default function FilterButton({ name, items, category, addTag, tags }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -11,6 +11,10 @@ export default function FilterButton({ name, items, category, addTag }) {
   const filteredItems = items.filter((item) =>
     item.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const isTagged = (item) => {
+    return tags.some((tag) => tag.name === item && tag.category === category);
+  };
 
   return (
     <div className="selectTag">
@@ -34,7 +38,7 @@ export default function FilterButton({ name, items, category, addTag }) {
               <p
                 key={index}
                 onClick={() => addTag(category, item)}
-                className="filter-item"
+                className={`filter-item ${isTagged(item) && category}`}
               >
                 {item}
               </p>

@@ -114,7 +114,7 @@ function App() {
 
         <div className="content">
           <h2>
-            CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET
+            CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET
             DÉLICIEUSES
           </h2>
           <div className="searchBar">
@@ -137,6 +137,7 @@ function App() {
               items={values}
               category={key}
               addTag={addTag}
+              tags={tags}
             />
           ))}
           <div className="recipe-count">

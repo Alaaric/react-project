@@ -1,12 +1,116 @@
-import Cards from "./components/Cards";
-import FilterZone from "./components/FilterZone";
+import { useState, useEffect } from "react";
+import recipes from "./data/recipes.json";
+import Card from "./components/Card";
+import FilterButton from "./components/FilterButton";
 import "./css/App.css";
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const translationMap = {
+    ingredients: "Ingrédients",
+    appliances: "Appareils",
+    ustensils: "Ustensiles",
+  };
+  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+  const [filtersValues, setFiltersValues] = useState({
+    ingredients: [],
+    appliances: [],
+    ustensils: [],
+  });
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    const updateFiltersValues = () => {
+      const ingredientsSet = new Set();
+      const appliancesSet = new Set();
+      const ustensilsSet = new Set();
+
+      filteredRecipes.forEach((recipe) => {
+        recipe.ingredients.forEach((ingredient) =>
+          ingredientsSet.add(ingredient.ingredient.toLowerCase())
+        );
+
+        appliancesSet.add(recipe.appliance.toLowerCase());
+
+        recipe.ustensils.forEach((ustensil) =>
+          ustensilsSet.add(ustensil.toLowerCase())
+        );
+      });
+
+      setFiltersValues({
+        ingredients: Array.from(ingredientsSet),
+        appliances: Array.from(appliancesSet),
+        ustensils: Array.from(ustensilsSet),
+      });
+    };
+
+    updateFiltersValues();
+  }, [filteredRecipes]);
+
+  useEffect(() => {
+    const updateFilteredRecipes = () => {
+      let updatedRecipes = recipes;
+
+      if (searchTerm) {
+        updatedRecipes = updatedRecipes.filter(
+          (recipe) =>
+            recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            recipe.description
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            recipe.ingredients.some((ingredient) =>
+              ingredient.ingredient
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+            )
+        );
+      }
+
+      tags.forEach(({ category, name }) => {
+        if (category === "ingredients") {
+          updatedRecipes = updatedRecipes.filter((recipe) =>
+            recipe.ingredients.some(
+              (ingredient) =>
+                ingredient.ingredient.toLowerCase() === name.toLowerCase()
+            )
+          );
+        } else if (category === "appliances") {
+          updatedRecipes = updatedRecipes.filter(
+            (recipe) => recipe.appliance.toLowerCase() === name.toLowerCase()
+          );
+        } else if (category === "ustensils") {
+          updatedRecipes = updatedRecipes.filter((recipe) =>
+            recipe.ustensils.some(
+              (ustensil) => ustensil.toLowerCase() === name.toLowerCase()
+            )
+          );
+        }
+      });
+
+      setFilteredRecipes(updatedRecipes);
+    };
+
+    updateFilteredRecipes();
+  }, [searchTerm, tags]);
+
+  const addTag = (category, name) => {
+    setTags((prevTags) => {
+      if (!prevTags.some((t) => t.name === name && t.category === category)) {
+        return [...prevTags, { category, name: name }];
+      }
+      return prevTags;
+    });
+  };
+
   return (
     <>
       <header className="header">
-        <h1>Les petits plats</h1>
+        <div className="logo">
+          <h1>LES PETITS PLATS </h1>
+          <div className="circle-icon">
+            <div className="round-icon"></div>
+          </div>
+        </div>
 
         <div className="content">
           <h2>
@@ -17,28 +121,48 @@ function App() {
             <input
               type="search"
               placeholder="Rechercher une recette, un ingrédient, ..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fas"
-              data-icon="magnifying-glass"
-              className="svg-inline--fa fa-magnifying-glass icone"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="currentColor"
-                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-              ></path>
-            </svg>
+            <i className="fas fa-magnifying-glass icone"></i>
           </div>
         </div>
       </header>
       <main>
-        <FilterZone />
-        <Cards />
+        <section className="filters">
+          {Object.entries(filtersValues).map(([key, values]) => (
+            <FilterButton
+              key={key}
+              name={translationMap[key]}
+              items={values}
+              category={key}
+              addTag={addTag}
+            />
+          ))}
+        </section>
+        <section className="tags">
+          {tags.map((tag) => (
+            <div
+              key={tag.name}
+              className={`tag ${tag.category}`}
+              onClick={() => setTags(tags.filter((t) => t !== tag))}
+            >
+              {tag.name}
+            </div>
+          ))}
+        </section>
+        <section className="cards">
+          {filteredRecipes.map((recipe) => (
+            <Card
+              key={recipe.id}
+              image={recipe.image}
+              name={recipe.name}
+              recipe={recipe.description}
+              ingredients={recipe.ingredients}
+              time={recipe.time}
+            />
+          ))}
+        </section>
       </main>
     </>
   );

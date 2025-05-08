@@ -21,10 +21,41 @@ body {
     justify-content: center;
     align-items: center;
 
-    h1 {
+    .logo {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 10px;
+      left: -60px;
+
+      h1 {
+        color: white;
+        font-size: 36px;
+        font-family: sans-serif;
+        font-weight: 800;
+        transform: scaleX(0.5);
+        white-space: nowrap;
+      }
+      
+      .circle-icon {
+        width: 20px; /* Taille du cercle intérieur */
+        height: 20px;
+        background-color: transparent; /* Cercle blanc intérieur */
+        border: 2px solid white; /* Cercle transparent autour */
+        border-radius: 50%; /* Forme circulaire */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        right: 70px; /* Ajustez cette valeur pour coller l'icône au texte */
+        transform: translateY(-50%);
+        
+        .round-icon {
+          width: 12px; /* Taille du cercle intérieur */
+          height: 12px;
+          background-color: white; /* Cercle blanc intérieur */
+          border-radius: 50%;
+        }
+      }
     }
 
     h2 {
@@ -47,6 +78,19 @@ body {
         height: 72px;
         border-radius: 10px;
         padding: 10px 20px;
+
+        .icone {
+          width: 52px;
+          height: 52px;
+          background-color: #1b1b1b;
+          color: #fff;
+          border-radius: 7px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 32px;
+          cursor: pointer;
+        }
         
         &>input {
           border-width: 0px;
@@ -75,25 +119,76 @@ body {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-
+  
       .selectTag {
         background-color: #fff;
         border-radius: 20px;
         padding: 17px;
+        border: none;
 
+        button {
+          width: 100%;
+          background-color: #fff;
+          border: none;
+          cursor: pointer;
+        }
+        
         .titleSelect {
           display: flex;
           gap: 63px;
           justify-content: space-between;
-      }
+        }
+        .inputSelectTag {
+          width: 100%;
+          padding: 10px;
+          margin-top: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+        
+        .filter-list {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          max-height: 300px;
+          overflow-y: auto;
+
+          p {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+          }
+        }
       }
     }
-
+  
     .tags {
       margin-top: 50px;
       display: flex;
       gap: 30px;
       flex-wrap: wrap;
+
+      .tag {
+        padding: 5px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+
+        &.ingredients {
+          background-color: #ffd15b;
+       
+        }
+        
+        &.ustensils {
+          background-color: #5bffce;
+        }
+
+        &.appliances {
+          background-color: #7fff5b;
+        }
+    }
     }
 
     .cards {

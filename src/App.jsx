@@ -139,15 +139,19 @@ function App() {
               addTag={addTag}
             />
           ))}
+          <div className="recipe-count">
+            {filteredRecipes.length}{" "}
+            {filteredRecipes.length > 1 ? "recettes" : "recette"}
+          </div>
         </section>
         <section className="tags">
           {tags.map((tag) => (
-            <div
-              key={tag.name}
-              className={`tag ${tag.category}`}
-              onClick={() => setTags(tags.filter((t) => t !== tag))}
-            >
-              {tag.name}
+            <div key={tag.name} className={`tag ${tag.category}`}>
+              <span>{tag.name}</span>
+              <i
+                className="fas fa-times remove-tag"
+                onClick={() => setTags(tags.filter((t) => t !== tag))}
+              ></i>
             </div>
           ))}
         </section>

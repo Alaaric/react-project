@@ -124,7 +124,7 @@ body {
         background-color: #fff;
         border-radius: 20px;
         padding: 17px;
-        border: none;
+        max-width: min-content;
 
         button {
           width: 100%;
@@ -149,13 +149,13 @@ body {
         .filter-list {
           display: flex;
           flex-direction: column;
-          align-items: stretch;
           max-height: 300px;
           overflow-y: auto;
 
           p {
             cursor: pointer;
             transition: background-color 0.3s ease;
+            text-wrap: nowrap;
 
             &:hover {
               background-color: #f0f0f0;
@@ -163,24 +163,31 @@ body {
           }
         }
       }
+
+      .recipe-count {
+        font-size: 24px;
+      }
     }
   
     .tags {
-      margin-top: 50px;
+      margin: 50px auto auto auto;
       display: flex;
       gap: 30px;
       flex-wrap: wrap;
+      width: 90%;
 
       .tag {
-        padding: 5px 10px;
+        padding: 10px 15px;
         border-radius: 10px;
-        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         &.ingredients {
           background-color: #ffd15b;
        
         }
-        
+
         &.ustensils {
           background-color: #5bffce;
         }
@@ -188,7 +195,13 @@ body {
         &.appliances {
           background-color: #7fff5b;
         }
-    }
+
+        .remove-tag {
+          cursor: pointer;
+          margin-left: 10px;
+          font-weight: bold;
+        }
+      }
     }
 
     .cards {

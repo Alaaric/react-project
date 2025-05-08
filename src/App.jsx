@@ -1,106 +1,19 @@
-import { useState, useEffect } from "react";
-import recipes from "./data/recipes.json";
+import { MATCH_TABLE } from "./constants/constants";
+import { useRecipes } from "./hook/useRecipes";
 import Card from "./components/Card";
 import FilterButton from "./components/FilterButton";
 import "./css/App.css";
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const translationMap = {
-    ingredients: "Ingrédients",
-    appliances: "Appareils",
-    ustensils: "Ustensiles",
-  };
-  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
-  const [filtersValues, setFiltersValues] = useState({
-    ingredients: [],
-    appliances: [],
-    ustensils: [],
-  });
-  const [tags, setTags] = useState([]);
-
-  useEffect(() => {
-    const updateFiltersValues = () => {
-      const ingredientsSet = new Set();
-      const appliancesSet = new Set();
-      const ustensilsSet = new Set();
-
-      filteredRecipes.forEach((recipe) => {
-        recipe.ingredients.forEach((ingredient) =>
-          ingredientsSet.add(ingredient.ingredient.toLowerCase())
-        );
-
-        appliancesSet.add(recipe.appliance.toLowerCase());
-
-        recipe.ustensils.forEach((ustensil) =>
-          ustensilsSet.add(ustensil.toLowerCase())
-        );
-      });
-
-      setFiltersValues({
-        ingredients: Array.from(ingredientsSet),
-        appliances: Array.from(appliancesSet),
-        ustensils: Array.from(ustensilsSet),
-      });
-    };
-
-    updateFiltersValues();
-  }, [filteredRecipes]);
-
-  useEffect(() => {
-    const updateFilteredRecipes = () => {
-      let updatedRecipes = recipes;
-
-      if (searchTerm) {
-        updatedRecipes = updatedRecipes.filter(
-          (recipe) =>
-            recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            recipe.description
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
-            recipe.ingredients.some((ingredient) =>
-              ingredient.ingredient
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-            )
-        );
-      }
-
-      tags.forEach(({ category, name }) => {
-        if (category === "ingredients") {
-          updatedRecipes = updatedRecipes.filter((recipe) =>
-            recipe.ingredients.some(
-              (ingredient) =>
-                ingredient.ingredient.toLowerCase() === name.toLowerCase()
-            )
-          );
-        } else if (category === "appliances") {
-          updatedRecipes = updatedRecipes.filter(
-            (recipe) => recipe.appliance.toLowerCase() === name.toLowerCase()
-          );
-        } else if (category === "ustensils") {
-          updatedRecipes = updatedRecipes.filter((recipe) =>
-            recipe.ustensils.some(
-              (ustensil) => ustensil.toLowerCase() === name.toLowerCase()
-            )
-          );
-        }
-      });
-
-      setFilteredRecipes(updatedRecipes);
-    };
-
-    updateFilteredRecipes();
-  }, [searchTerm, tags]);
-
-  const addTag = (category, name) => {
-    setTags((prevTags) => {
-      if (!prevTags.some((t) => t.name === name && t.category === category)) {
-        return [...prevTags, { category, name: name }];
-      }
-      return prevTags;
-    });
-  };
+  const {
+    filteredRecipes,
+    filtersValues,
+    tags,
+    searchTerm,
+    setSearchTerm,
+    addTag,
+    removeTag,
+  } = useRecipes();
 
   return (
     <>
@@ -133,7 +46,7 @@ function App() {
           {Object.entries(filtersValues).map(([key, values]) => (
             <FilterButton
               key={key}
-              name={translationMap[key]}
+              name={MATCH_TABLE[key]}
               items={values}
               category={key}
               addTag={addTag}
@@ -151,7 +64,7 @@ function App() {
               <span>{tag.name}</span>
               <i
                 className="fas fa-times remove-tag"
-                onClick={() => setTags(tags.filter((t) => t !== tag))}
+                onClick={() => removeTag(tag)}
               ></i>
             </div>
           ))}

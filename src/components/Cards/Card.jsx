@@ -1,9 +1,9 @@
-import "../css/Card.css";
+import "../../css/Card.css";
 
-const Card = ({ image, name, recipeTitle, recipe, ingredients, time }) => {
+const Card = ({ image, name, recipe, ingredients, time }) => {
   return (
     <article className="card">
-      <img src={`./images/${image}`} alt={recipeTitle} className="card-image" />
+      <img src={`./images/${image}`} className="card-image" />
       <div className="time">
         <p>{time}min</p>
       </div>

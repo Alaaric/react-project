@@ -1,43 +1,16 @@
-import Cards from "./components/Cards";
-import FilterZone from "./components/FilterZone";
+import Header from "./components/Header/Header";
+import Filters from "./components/Filters/Filters";
+import Tags from "./components/Tags/Tags";
+import Cards from "./components/Cards/Cards";
 import "./css/App.css";
 
 function App() {
   return (
     <>
-      <header className="header">
-        <h1>Les petits plats</h1>
-
-        <div className="content">
-          <h2>
-            CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET
-            DÉLICIEUSES
-          </h2>
-          <div className="searchBar">
-            <input
-              type="search"
-              placeholder="Rechercher une recette, un ingrédient, ..."
-            />
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fas"
-              data-icon="magnifying-glass"
-              className="svg-inline--fa fa-magnifying-glass icone"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="currentColor"
-                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main>
-        <FilterZone />
+        <Filters />
+        <Tags />
         <Cards />
       </main>
     </>

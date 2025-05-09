@@ -44,7 +44,7 @@ export const RecipesProvider = ({ children }) => {
     const updateFilteredRecipes = () => {
       let updatedRecipes = recipesData;
 
-      if (searchTerm) {
+      if (searchTerm.length >= 3) {
         updatedRecipes = updatedRecipes.filter(
           (recipe) =>
             recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
